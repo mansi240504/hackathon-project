@@ -1,40 +1,40 @@
+require('dotenv').config();
+require('./connection'); // 👈 DB connect yahi se hoga
+
 const express = require('express');
-const mongoose = require('mongoose');
+const cors = require('cors');
+
 const app = express();
+
+// Routes
 const UserRouter = require('./routers/userrouter');
 const HackRouter = require('./routers/hackathonRouter');
 const TeamRouter = require('./routers/teamRouter');
 const ParticipationRouter = require('./routers/participantRouter');
 
+// Environment variables
+const PORT = process.env.PORT || 4000;
 
-const cors = require('cors');
-const port = 4000;  // port kuch bhi de skte hai but kuch port jyada use kiye jaate hai
-
-//middleware
+// Middleware
 app.use(cors({
-    origin: ['http://localhost:3000']
+    origin: ['http://localhost:3000'],
+    credentials: true
 }));
+
 app.use(express.json());
-app.use("/user", UserRouter);
-app.use("/challenges", HackRouter);
-app.use("/teams", TeamRouter);
-app.use("/participants", ParticipationRouter);
 
-//endpoint 
+// Routes
+app.use('/user', UserRouter);
+app.use('/challenges', HackRouter);
+app.use('/teams', TeamRouter);
+app.use('/participants', ParticipationRouter);
+
+// Health check
 app.get('/', (req, res) => {
-    res.send("response from express")
+    res.send('🚀 API is running successfully');
 });
 
-app.get('/add', (req, res) => {
-    res.send("response from add")
-});
-app.get('/getall', (req, res) => {
-    res.send("response from getall")
-});
-app.get('/delete', (req, res) => {
-    res.send("response from  delete")
-});
-//starting the server 
-app.listen(port, () => {
-    console.log('server started ');
+// Server start
+app.listen(PORT, () => {
+    console.log(`🚀 Server running on port ${PORT}`);
 });

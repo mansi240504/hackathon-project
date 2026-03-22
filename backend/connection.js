@@ -1,17 +1,15 @@
-const mongoose = require('mongoose');
-const url= "mongodb+srv://Mansikashyap:15242004@cluster0.ibzkxvo.mongodb.net/hkdb1100?retryWrites=true&w=majority&appName=Cluster0"
+require('dotenv').config();
 
-//asynchrounous function
+const mongoose = require('mongoose');
+
+const url = process.env.MONGO_URI;
+
 mongoose.connect(url)
-.then((result) => {
-    console.log("mongoDB connected");
-    
-}).catch((err) => {
-    
-    console.log(err);
+.then(() => {
+    console.log("✅ MongoDB connected");
+})
+.catch((err) => {
+    console.log("❌ DB Error:", err);
 });
 
-console.log("task 1")
-console.log("task 2")
-
-module.exports=mongoose;
+module.exports = mongoose;
