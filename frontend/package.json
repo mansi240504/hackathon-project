@@ -9,7 +9,7 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "axios": "^1.11.0",
+    "axios": "^1.13.6",
     "formik": "^2.4.6",
     "hot": "^0.0.7",
     "install": "^0.13.0",
