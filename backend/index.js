@@ -1,5 +1,4 @@
 require('dotenv').config();
-require('./connection'); // 👈 DB connect yahi se hoga
 
 const express = require('express');
 const cors = require('cors');
@@ -11,6 +10,7 @@ const UserRouter = require('./routers/userrouter');
 const HackRouter = require('./routers/hackathonRouter');
 const TeamRouter = require('./routers/teamRouter');
 const ParticipationRouter = require('./routers/participantRouter');
+const IdeaRouter = require('./routers/ideaRouter');
 
 // Environment variables
 const PORT = process.env.PORT || 4000;
@@ -28,6 +28,7 @@ app.use('/user', UserRouter);
 app.use('/challenges', HackRouter);
 app.use('/teams', TeamRouter);
 app.use('/participants', ParticipationRouter);
+app.use('/ideas', IdeaRouter);
 
 // Health check
 app.get('/', (req, res) => {
