@@ -1,4 +1,4 @@
-const { Schema, model } = require('../Connection');
+const { Schema, model } = require('../connection');
 
 const participantSchema = new Schema({
   user: { type: Schema.Types.ObjectId, ref: 'users' },   // Individual user (optional)

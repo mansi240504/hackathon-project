@@ -1,4 +1,4 @@
-const { Schema, model } = require('../Connection');
+const { Schema, model } = require('../connection');
 
 const challengeSchema = new Schema({
   title: { type: String, required: true },         // Challenge ka naam
