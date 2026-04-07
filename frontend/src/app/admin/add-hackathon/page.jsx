@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import toast from "react-hot-toast";
-import axios from "axios";
+import api from "@/utils/api";
 
 const DIFFICULTY_CONFIG = {
   Easy:   { color: "#10b981", bg: "#ecfdf5", border: "#6ee7b7" },
@@ -41,17 +41,22 @@ const AddHackathon = () => {
     },
     validationSchema,
     onSubmit: (values, { resetForm }) => {
-      if (tags.length === 0) { toast.error("Add at least one tag"); return; }
+      if (tags.length === 0) { 
+        toast.error("Add at least one tag"); 
+        return; 
+      }
       setIsLoading(true);
-      const token = localStorage.getItem("token");
-      axios.post("http://localhost:4000/challenges/add", { ...values, tags: tags.join(",") }, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
+
+      api.post("/challenges/add", { ...values, tags: tags.join(",") })
         .then(() => {
-          toast.success("Challenge added successfully!");
-          resetForm(); setTags([]);
+          toast.success("Challenge published successfully! 🚀");
+          resetForm(); 
+          setTags([]);
+          router.push("/manage-hackathons"); 
         })
-        .catch(() => toast.error("Failed to add challenge"))
+        .catch((err) => {
+          toast.error(err.response?.data?.message || "Failed to add challenge");
+        })
         .finally(() => setIsLoading(false));
     },
   });
@@ -100,7 +105,6 @@ const AddHackathon = () => {
           background: var(--bg);
         }
 
-        /* ── SIDEBAR ── */
         .ah-sidebar {
           display: none; position: sticky; top: 0; height: 100vh;
           width: 300px; flex-shrink: 0;
@@ -155,7 +159,6 @@ const AddHackathon = () => {
         .ah-tip-text { font-size: 12.5px; color: rgba(255,255,255,0.4); line-height: 1.6; }
         .ah-tip-text strong { color: rgba(255,255,255,0.75); font-weight: 500; display: block; }
 
-        /* ── MAIN ── */
         .ah-main {
           flex: 1; display: flex; align-items: flex-start;
           justify-content: center; padding: 48px 24px;
@@ -176,7 +179,6 @@ const AddHackathon = () => {
           to   { opacity: 1; transform: translateY(0); }
         }
 
-        /* Card header */
         .ah-card-head {
           padding: 28px 36px 24px;
           border-bottom: 1px solid var(--border);
@@ -198,10 +200,8 @@ const AddHackathon = () => {
         }
         .ah-card-sub { font-size: 13px; color: var(--muted); margin-top: 6px; }
 
-        /* Card body */
         .ah-card-body { padding: 28px 36px 36px; display: flex; flex-direction: column; gap: 20px; }
 
-        /* Field */
         .ah-field { display: flex; flex-direction: column; gap: 0; }
         .ah-field-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
         .ah-label { font-size: 13px; font-weight: 500; color: var(--slate); letter-spacing: 0.01em; }
@@ -241,10 +241,6 @@ const AddHackathon = () => {
           font-size: 12px; color: #ef4444; margin-top: 5px;
         }
 
-        /* Char count */
-        .ah-charcount { font-size: 11.5px; color: var(--muted); text-align: right; margin-top: 4px; }
-
-        /* Difficulty pills */
         .ah-diff-pills { display: flex; gap: 8px; }
         .ah-diff-pill {
           flex: 1; padding: 9px 12px;
@@ -259,7 +255,6 @@ const AddHackathon = () => {
           width: 7px; height: 7px; border-radius: 50%;
         }
 
-        /* Tag input */
         .ah-tag-box {
           min-height: 44px; padding: 6px 10px;
           border: 1.5px solid var(--border); border-radius: 10px;
@@ -273,7 +268,7 @@ const AddHackathon = () => {
         }
         .ah-tag {
           display: flex; align-items: center; gap: 5px;
-          padding: 3px 10px 3px 10px;
+          padding: 3px 10px;
           background: #ede9fe; border-radius: 100px;
           font-size: 12px; font-weight: 500; color: var(--accent);
         }
@@ -288,19 +283,14 @@ const AddHackathon = () => {
           font-family: 'DM Sans', sans-serif; font-size: 13.5px;
           color: var(--ink); flex: 1; min-width: 120px;
         }
-        .ah-tag-input::placeholder { color: #b0b8c8; }
 
-        /* Date row */
         .ah-date-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
         @media (max-width: 480px) { .ah-date-row { grid-template-columns: 1fr; } }
-        .ah-date-row .ah-input { padding-left: 38px; }
 
-        /* Divider */
         .ah-section-divider {
           height: 1px; background: var(--border); margin: 4px 0;
         }
 
-        /* Submit */
         .ah-submit {
           width: 100%; padding: 13px;
           background: linear-gradient(135deg, #6366f1, #4f46e5);
@@ -324,12 +314,9 @@ const AddHackathon = () => {
           animation: spin 0.7s linear infinite;
         }
         @keyframes spin { to { transform: rotate(360deg); } }
-
-        @media (max-width: 480px) { .ah-card-head, .ah-card-body { padding-left: 20px; padding-right: 20px; } }
       `}</style>
 
       <div className="ah-root">
-        {/* Sidebar */}
         <aside className="ah-sidebar">
           <div className="ah-sidebar-bg" />
           <div className="ah-sidebar-overlay" />
@@ -361,10 +348,8 @@ const AddHackathon = () => {
           </div>
         </aside>
 
-        {/* Main */}
         <main className="ah-main">
           <div className="ah-card">
-            {/* Header */}
             <div className="ah-card-head">
               <div className="ah-card-head-top">
                 <div className="ah-head-icon">
@@ -375,11 +360,9 @@ const AddHackathon = () => {
               <p className="ah-card-sub">Fill in the details below to publish your hackathon challenge</p>
             </div>
 
-            {/* Body */}
             <div className="ah-card-body">
               <form onSubmit={formik.handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
 
-                {/* Title */}
                 <Field label="Challenge Title" error={formik.errors.title} touched={formik.touched.title}>
                   <div className="ah-input-wrap">
                     <svg className="fi" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
@@ -394,7 +377,6 @@ const AddHackathon = () => {
                   </div>
                 </Field>
 
-                {/* Description */}
                 <Field label="Description" error={formik.errors.description} touched={formik.touched.description} hint={`${formik.values.description.length} chars`}>
                   <div className="ah-textarea-wrap">
                     <svg className="fi" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
@@ -402,14 +384,13 @@ const AddHackathon = () => {
                     </svg>
                     <textarea
                       className={`ah-textarea${formik.touched.description && formik.errors.description ? " invalid" : ""}`}
-                      name="description" placeholder="Describe the challenge, objectives, and what participants need to build..."
+                      name="description" placeholder="Describe the challenge objectives..."
                       value={formik.values.description}
                       onChange={formik.handleChange} onBlur={formik.handleBlur}
                     />
                   </div>
                 </Field>
 
-                {/* Difficulty */}
                 <div className="ah-field">
                   <div className="ah-field-header">
                     <label className="ah-label">Difficulty Level</label>
@@ -431,11 +412,10 @@ const AddHackathon = () => {
                   </div>
                 </div>
 
-                {/* Tags */}
                 <div className="ah-field">
                   <div className="ah-field-header">
                     <label className="ah-label">Tags</label>
-                    <span className="ah-hint">Press Enter or comma to add</span>
+                    <span className="ah-hint">Press Enter or comma</span>
                   </div>
                   <div className="ah-tag-box" onClick={() => document.getElementById("tag-input").focus()}>
                     {tags.map((t) => (
@@ -451,7 +431,7 @@ const AddHackathon = () => {
                     <input
                       id="tag-input"
                       className="ah-tag-input"
-                      placeholder={tags.length === 0 ? "frontend, react, api..." : "Add more..."}
+                      placeholder={tags.length === 0 ? "react, api..." : ""}
                       value={tagInput}
                       onChange={(e) => setTagInput(e.target.value)}
                       onKeyDown={addTag}
@@ -461,7 +441,6 @@ const AddHackathon = () => {
 
                 <div className="ah-section-divider" />
 
-                {/* Dates */}
                 <div className="ah-date-row">
                   <Field label="Start Date" error={formik.errors.startDate} touched={formik.touched.startDate}>
                     <div className="ah-input-wrap">
@@ -483,7 +462,6 @@ const AddHackathon = () => {
                   </Field>
                 </div>
 
-                {/* Submit */}
                 <button type="submit" className="ah-submit" disabled={isLoading}>
                   {isLoading
                     ? <><div className="spinner" /> Publishing...</>

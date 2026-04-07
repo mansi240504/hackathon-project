@@ -17,7 +17,10 @@ const PORT = process.env.PORT || 4000;
 
 // Middleware
 app.use(cors({
-    origin: ['http://localhost:3000'],
+    origin: [
+        'http://localhost:3000', 
+        'https://hackathon-project-sf5q-az9hof5dx.vercel.app'
+    ],
     credentials: true
 }));
 
