@@ -16,12 +16,15 @@ router.post('/add', async (req, res) => {
       email,
       password: hashedPassword, // 🔐 HASHED
       role
-    });
+    } 
+
+  );
 
     
 
     res.status(201).json({ message: "User created" });
   } catch (err) {
+    console.error(err);
     res.status(500).json({ error: err.message });
   }
 });
