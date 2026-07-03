@@ -11,6 +11,7 @@ const HackRouter = require('./routers/hackathonRouter');
 const TeamRouter = require('./routers/teamRouter');
 const ParticipationRouter = require('./routers/participantRouter');
 const IdeaRouter = require('./routers/ideaRouter');
+const ProfileRouter = require('./routers/profileRouter');
 
 // Environment variables
 const PORT = process.env.PORT || 4000;
@@ -32,6 +33,7 @@ app.use('/challenges', HackRouter);
 app.use('/teams', TeamRouter);
 app.use('/participants', ParticipationRouter);
 app.use('/ideas', IdeaRouter);
+app.use('/profile', ProfileRouter);
 
 // Health check
 app.get('/', (req, res) => {
