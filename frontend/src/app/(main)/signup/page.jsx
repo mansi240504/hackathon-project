@@ -133,7 +133,7 @@ const Signup = () => {
                   name="name"
                   type="text"
                   placeholder="John Doe"
-                  className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all outline-none"
+                  className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all outline-none text-black"
                   onChange={signupForm.handleChange}
                   value={signupForm.values.name}
                   required
@@ -147,7 +147,7 @@ const Signup = () => {
                   name="email"
                   type="email"
                   placeholder="johndoe@gmail.com"
-                  className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all outline-none"
+                  className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all outline-none text-black"
                   onChange={signupForm.handleChange}
                   value={signupForm.values.email}
                   required
@@ -163,7 +163,7 @@ const Signup = () => {
                 name="password"
                 type={showPassword ? "text" : "password"}
                 placeholder="Min. 8 characters"
-                className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all outline-none"
+                className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all outline-none text-black"
                 onChange={signupForm.handleChange}
                 value={signupForm.values.password}
                 required
@@ -185,7 +185,7 @@ const Signup = () => {
                 name="confirmPassword"
                 type="password"
                 placeholder="Repeat your password"
-                className={`w-full px-4 py-3 rounded-xl border bg-slate-50 focus:bg-white focus:ring-4 transition-all outline-none ${
+                className={`w-full px-4 py-3 rounded-xl border bg-slate-50 focus:bg-white focus:ring-4 transition-all outline-none text-black ${
                   signupForm.values.confirmPassword &&
                   signupForm.values.password !==
                     signupForm.values.confirmPassword

@@ -1,20 +1,31 @@
 "use client";
-import Link from "next/link";
 import React, { useEffect, useState } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const Navbar = () => {
   const [role, setRole] = useState(null);
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     const storedRole = localStorage.getItem("role");
     setRole(storedRole);
+  }, [pathname]);
 
+  useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10);
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("role");
+    setRole(null);
+    window.location.href = "/login";
+  };
 
   const navLinks = [
     { href: "/view-challenges", label: "Challenges" },
@@ -25,6 +36,11 @@ const Navbar = () => {
         ]
       : []),
     { href: "/user/manage-team", label: "Manage Team" },
+    ...(role
+      ? [
+          { href: "/profile", label: "Profile" },
+        ]
+      : []),
   ];
 
   return (
@@ -230,8 +246,14 @@ const Navbar = () => {
           {/* Desktop Auth */}
           <div className="nb-auth">
             <div className="nb-divider" />
-            <Link href="/login" className="nb-btn-ghost">Log in</Link>
-            <Link href="/signup" className="nb-btn-primary">Sign up →</Link>
+            {role ? (
+              <button onClick={handleLogout} className="nb-btn-ghost cursor-pointer">Log out</button>
+            ) : (
+              <>
+                <Link href="/login" className="nb-btn-ghost">Log in</Link>
+                <Link href="/signup" className="nb-btn-primary">Sign up →</Link>
+              </>
+            )}
           </div>
 
           {/* Hamburger */}
@@ -266,8 +288,22 @@ const Navbar = () => {
           ))}
           <div className="nb-mobile-divider" />
           <div className="nb-mobile-auth">
-            <Link href="/login" className="nb-mobile-login" onClick={() => setMobileOpen(false)}>Log in</Link>
-            <Link href="/signup" className="nb-mobile-signup" onClick={() => setMobileOpen(false)}>Sign up</Link>
+            {role ? (
+              <button
+                onClick={() => {
+                  setMobileOpen(false);
+                  handleLogout();
+                }}
+                className="nb-mobile-login cursor-pointer flex-1 text-center font-medium py-2 rounded-xl"
+              >
+                Log out
+              </button>
+            ) : (
+              <>
+                <Link href="/login" className="nb-mobile-login" onClick={() => setMobileOpen(false)}>Log in</Link>
+                <Link href="/signup" className="nb-mobile-signup" onClick={() => setMobileOpen(false)}>Sign up</Link>
+              </>
+            )}
           </div>
         </div>
       </nav>
