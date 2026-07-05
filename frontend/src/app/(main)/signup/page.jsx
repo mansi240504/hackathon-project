@@ -133,14 +133,15 @@ const Signup = () => {
                   name="name"
                   type="text"
                   placeholder="John Doe"
-                  className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all outline-none text-black"
+                  className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all outline-none text-black
+                  "
                   onChange={signupForm.handleChange}
                   value={signupForm.values.name}
                   required
                 />
               </div>
               <div className="space-y-1">
-                <label className="text-sm font-medium text-slate-700 ml-1">
+                <label className="text-sm font-medium text-slate-700 ml-1 ">
                   Email
                 </label>
                 <input
@@ -156,7 +157,7 @@ const Signup = () => {
             </div>
 
             <div className="space-y-1 relative">
-              <label className="text-sm font-medium text-slate-700 ml-1">
+              <label className="text-sm font-medium text-slate-700 ml-1  ">
                 Password
               </label>
               <input
