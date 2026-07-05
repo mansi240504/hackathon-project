@@ -186,7 +186,7 @@ const Signup = () => {
                 name="confirmPassword"
                 type="password"
                 placeholder="Repeat your password"
-                className={`w-full px-4 py-3 rounded-xl border bg-slate-50 focus:bg-white focus:ring-4 transition-all outline-none ${
+                className={`w-full px-4 py-3 rounded-xl border bg-slate-50 focus:bg-white focus:ring-4 transition-all outline-none text-black ${
                   signupForm.values.confirmPassword &&
                   signupForm.values.password !==
                     signupForm.values.confirmPassword
